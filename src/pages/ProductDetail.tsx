@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
@@ -27,7 +26,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProductCard } from '@/components/ProductCard';
 import { getProductById, formatCurrency, calculateDiscountedPrice, getProductsByType } from '@/lib/data';
 import { useCart } from '@/contexts/CartContext';
-import { NotFound } from './NotFound';
+import NotFound from './NotFound';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
