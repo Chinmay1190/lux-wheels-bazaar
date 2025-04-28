@@ -107,7 +107,7 @@ const ProductListing = () => {
     results = filterProducts(
       undefined, // We already filtered by category/type
       undefined, // We already filtered by type
-      selectedBrand,
+      selectedBrand === 'all' ? undefined : selectedBrand, // Use undefined for "all" brands
       priceRange[0],
       priceRange[1],
       inStockOnly
@@ -130,7 +130,7 @@ const ProductListing = () => {
   // Count active filters
   const getActiveFilterCount = () => {
     let count = 0;
-    if (selectedBrand) count++;
+    if (selectedBrand && selectedBrand !== 'all') count++;
     if (priceRange[0] > minPrice || priceRange[1] < maxPrice) count++;
     if (inStockOnly) count++;
     return count;
