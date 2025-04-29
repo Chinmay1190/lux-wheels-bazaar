@@ -8,6 +8,7 @@ import { Product } from '@/lib/types';
 import { formatCurrency, calculateDiscountedPrice } from '@/lib/data';
 import { useCart } from '@/contexts/CartContext';
 import { Badge } from '@/components/ui/badge';
+import { useToast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
   product: Product;
@@ -15,17 +16,28 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart, isInCart } = useCart();
+  const { toast } = useToast();
   const isDiscounted = !!product.discount;
 
+  const handleAddToCart = () => {
+    addToCart(product, 1);
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart.`,
+    });
+  };
+
   return (
-    <Card className="product-card h-full flex flex-col overflow-hidden">
-      <div className="relative">
+    <Card className="product-card h-full flex flex-col overflow-hidden group transition-all duration-300 hover:shadow-md">
+      <div className="relative overflow-hidden">
         {/* Main product image */}
-        <img 
-          src={product.images[0] || '/placeholder.svg'} 
-          alt={product.name} 
-          className="product-image"
-        />
+        <Link to={`/product/${product.id}`} className="block">
+          <img 
+            src={product.images[0] || '/placeholder.svg'} 
+            alt={product.name} 
+            className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-105"
+          />
+        </Link>
         
         {/* Discount badge if applicable */}
         {isDiscounted && (
@@ -49,12 +61,12 @@ export function ProductCard({ product }: ProductCardProps) {
         
         {/* Wishlist button */}
         <Button 
-          variant="ghost" 
+          variant="secondary" 
           size="icon" 
-          className="absolute top-2 right-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background/90"
+          className="absolute bottom-2 right-2 opacity-0 transition-opacity rounded-full bg-background/80 backdrop-blur-sm hover:bg-background/90 group-hover:opacity-100"
           aria-label="Add to wishlist"
         >
-          <Heart className="h-5 w-5" />
+          <Heart className="h-4 w-4" />
         </Button>
       </div>
       
@@ -106,8 +118,8 @@ export function ProductCard({ product }: ProductCardProps) {
       <CardFooter className="pt-0">
         {product.stock > 0 ? (
           <Button 
-            className="w-full"
-            onClick={() => addToCart(product, 1)}
+            className="w-full transition-all"
+            onClick={handleAddToCart}
             disabled={isInCart(product.id)}
           >
             {isInCart(product.id) ? (
