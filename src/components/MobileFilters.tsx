@@ -72,7 +72,7 @@ export function MobileFilters({
                 variant={!selectedBrand || selectedBrand === 'all' ? "default" : "outline"}
                 size="sm"
                 className="w-full justify-start"
-                onClick={() => setSelectedBrand('all')}
+                onClick={() => setSelectedBrand(undefined)}
               >
                 {(!selectedBrand || selectedBrand === 'all') && <Check className="h-4 w-4 mr-2" />}
                 All Brands

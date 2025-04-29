@@ -46,8 +46,8 @@ export function ProductFilters({
     <div className="flex items-center space-x-4">
       {/* Brand Dropdown */}
       <Select 
-        value={selectedBrand || ''} 
-        onValueChange={(value) => setSelectedBrand(value === '' ? undefined : value)}
+        value={selectedBrand || 'all'} 
+        onValueChange={(value) => setSelectedBrand(value === 'all' ? undefined : value)}
       >
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Select Brand" />
